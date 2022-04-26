@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
  import axios from 'axios'
+ import './register.css'
 
 
 export default function Register(){
@@ -39,7 +40,7 @@ export default function Register(){
     }
 
     return (
-        <div>
+        <div className="register">
             <h4> select your user name: </h4>
             <input type="text" name='name'placeholder="selec your userName" onChange={e=> handleForm(e)}/> <br/>
             <h4> select your email </h4>
@@ -48,7 +49,7 @@ export default function Register(){
             <input type='password'name = 'password'placeholder="select your password"onChange={e=> handleForm(e)} />
             <h4> Type your password again </h4>
             <input type='password' placeholder="select your password" onChange={e=> handleSecondPassword(e)}/>
-            <button onClick={checkPassword}> Submit </button>
+            <button onClick={checkPassword} className='button'> Submit </button>
         </div>
     )
 }   

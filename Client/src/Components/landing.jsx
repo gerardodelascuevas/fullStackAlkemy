@@ -1,17 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+import './landing.css'
 
 
 
 export default function Landing(){
    
     return (
-        <div>
+        <div className="landing">
             <h1> Welcome to the money register app </h1>
-            <span> Do you have an account: </span>
-            <Link to= './login'> <button>Login </button>  </Link> 
+            <span className="span"> Do you have an account: </span>
+            <Link to= './login'> <button className="button">Login </button>  </Link> 
             <br/> <br/>
-            <span> Do you want to register </span>
-            <Link to = './register'> <button> Register </button></Link>
+            <span className="span"> Do you want to register </span>
+            <Link to = './register'> <button className="button"> Register </button></Link>
         </div>
     )
 }

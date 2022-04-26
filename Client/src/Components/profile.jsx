@@ -34,30 +34,49 @@ export default function Profile(){
         }
         const handleSubmitMovement = async()=> {
             // if(movement.type === 'negative'){
-                setMovement(movement.amount)
+                setMovement(movement)
             // }
             console.log(movement)
            await axios.post('http://localhost:3001/movement', movement)
             alert('The database has been uploaded')
             window.location.reload()
         }
-   
+        console.log(movement)
         
     if(result.userMovements && result.userMovements[0]){
         let amounts = result.userMovements.map(x=>  Number(x.amount))
         var totalAmount = amounts.reduce((acc, el)=> acc + el)
         
     }
+   
     console.log(result.userMovements)
+    let userMovementForShow = result.userMovements
+    const [myType, setMyType] = useState('all')
+    const handleFilterResult = (e)=> {
+        setMyType(e)
+    }
+   
+       // let bombones
+        myType === 'all' ?  userMovementForShow = userMovementForShow : 
+        userMovementForShow = result.userMovements.filter(x=> x.type === myType)
+       
+    console.log(userMovementForShow)
     let contador = 1 
     return (
         <div>
      {result ? 
      <h1> Welcome {result.userData.name} </h1> : <h1>Loading...</h1>}    
+     <select onChange={(e)=> handleFilterResult(e.target.value)}>
+         <option value='all'> Select the amount type </option>
+         <option value='positive'> Positive </option>
+         <option value='negative'> Negative </option>
+     </select>
            
-         <h3>Your past movements:</h3> {             
+         <h3>Your past movements:</h3> { 
+                 
              result.userMovements ? 
-                result.userMovements.map(x=> {
+        
+            userMovementForShow.map(x=> {
                     return <div>
                         <span> {contador++}:
                         <InputProfile 

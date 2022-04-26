@@ -62,8 +62,8 @@ router.post('/movement', async (req, res)=> {
 
 router.post('/auth', async (req, res)=> {
     const { email, password } = req.body;
-   
-    if(!email || !password) {
+    try { 
+        if(!email || !password) {
         return res.status(404).send("Email and password are required")
     }
      const user = await Users.findOne({
@@ -78,8 +78,14 @@ router.post('/auth', async (req, res)=> {
          }
         res.send(response)
      } else {
-         res.status(404).send({msg: "user not found"})
+         res.status(400).send({msg: "user not found"})
      }
+        
+    } catch (error) {
+        console.log(error)
+    }
+   
+   
    
 })
 
@@ -113,14 +119,11 @@ router.put('/editMovement', async(req, res)=> {
              res.send('Database is updated')
 })
 
-router.put('/deleteMovement', async(req, res)=> {
-    const { id } = req.body
-
+router.delete('/:id', async(req, res)=> {
+    const { id } = req.params
+    
     if(id){
-        console.log(req.body)
-    console.log(id) 
-
-    await Movement.destroy({
+    await Movement.destroy({ 
         where: { id: id }
     })
     res.send('Movement deleted')

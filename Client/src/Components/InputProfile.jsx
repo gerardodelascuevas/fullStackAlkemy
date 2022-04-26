@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
+import Swal from "sweetalert2"
 
 export default function InputProfile({id, date, concept, amount, type }){
 
@@ -44,10 +45,9 @@ export default function InputProfile({id, date, concept, amount, type }){
     const handleDeleteMovement = async()=> {
     
         let boolean = window.confirm('This action is permanent, are you sure?')
-        if(boolean){
-            let myId = { id: id }           
-            await axios.put(`http://localhost:3001/deleteMovement`, myId)
-             alert('database has been updated')
+        if(boolean){             
+            await axios.delete(`http://localhost:3001/${id}`)
+             Swal.fire('database has been updated')
              window.location.reload()
         }       
     }

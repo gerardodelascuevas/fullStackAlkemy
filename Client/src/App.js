@@ -5,6 +5,7 @@ import Profile from './Components/profile';
 import Landing from './Components/landing';
 import Register from './Components/register'
 import Home from './Components/home';
+import Footer from './Components/footer';
 
 function App() {
   return (
@@ -16,8 +17,9 @@ function App() {
       <Route path='/login' element = { <Login /> } />
       <Route path='/home' element = { <Home /> } />
       <Route path='/:id' element = { <Profile />} />
+      <Route path='/:id/movement?:movement' element = { <Profile /> } />
     </Routes>
-  
+    <Footer />
    
     </div>
   );
