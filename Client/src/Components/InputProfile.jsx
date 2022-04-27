@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 import Swal from "sweetalert2"
+import './inputProfile.css'
 
 export default function InputProfile({id, date, concept, amount, type }){
 
@@ -24,13 +25,6 @@ export default function InputProfile({id, date, concept, amount, type }){
         })
     }
 
-    // const handleSelectType = (e)=> {
-    //     setTheType(e)
-    //     setMovement({
-    //         ...movement, 
-    //         type: e
-    //     })
-    // }
     console.log(movement)
 
     const handleUpdateMovement = async()=> {
@@ -39,7 +33,7 @@ export default function InputProfile({id, date, concept, amount, type }){
         alert('The database is updated')
         window.location.reload()
     }
-    console.log(theType)
+   
     if(type === 'negative') amount = '-' + amount
 
     const handleDeleteMovement = async()=> {
@@ -56,21 +50,16 @@ export default function InputProfile({id, date, concept, amount, type }){
         <div>
             { !edit ? 
             <div>
-            <span> {date} {concept} $ {amount} {type} </span>    
-            <button onClick={()=> setEdit(!edit)}> Edit your movement </button>
+            <span className="span"> {date} {concept} <span className={type === 'negative' ? 'neg' : 'pos'}>$ {amount} </span> {type} </span>    
+            <button onClick={()=> setEdit(!edit)} className='button'> Edit your movement </button>
             </div> : 
             <div>
                 <span> { date } </span>
-                <input name='concept' type="text" placeholder="concept" onChange={e=> handleEditMovement(e)}/>
-                <input name='amount' type="number" placeholder="amount" onChange={e=> handleEditMovement(e)} />
+                <input name='concept' type="text" placeholder={concept} onChange={e=> handleEditMovement(e)}/>
+                <input name='amount' type="number" placeholder={amount} onChange={e=> handleEditMovement(e)} />
                 <span> {type} </span>
-                {/*<select name='type' onChange={e=> handleSelectType(e.target.value)}> 
-                 <option value='negative' > Select your option </option>
-                    <option value="negative">Negative</option>
-                    <option value="positive">Positive</option>                  
-                </select> */}
-                <button onClick={()=> handleDeleteMovement()}> X </button>
-                <button onClick={()=> handleUpdateMovement()}> Update Movement </button>
+                <button onClick={()=> handleDeleteMovement()} className='btn-error'> X </button>
+                <button onClick={()=> handleUpdateMovement()} className='button'> Update Movement </button>
             </div>
         }
         </div>

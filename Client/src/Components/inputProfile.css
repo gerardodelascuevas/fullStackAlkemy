@@ -1,0 +1,10 @@
+.btn-error{
+    background-color: red;
+    border-radius: 5px;
+}
+.neg{
+    color: red;
+}
+.pos{
+    color: green;
+}

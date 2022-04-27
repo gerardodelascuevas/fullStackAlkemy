@@ -1,0 +1,4 @@
+.profile{
+    background: rgb(63,251,160);
+    background: radial-gradient(circle, rgba(63,251,160,1) 0%, rgba(211,251,69,1) 100%);
+}

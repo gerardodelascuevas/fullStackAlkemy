@@ -2,11 +2,11 @@ const { DataTypes } = require('sequelize')
 
 module.exports = sequelize=> {
     sequelize.define('Movement', {
-        id: {
-            defaultValue: DataTypes.UUIDV4,
+        id: {         
             type: DataTypes.UUIDV4,
             allowNull: false,
-            primaryKey: true,            
+            primaryKey: true,  
+            defaultValue: DataTypes.UUIDV4,          
         },
         date: {
             type: DataTypes.STRING,

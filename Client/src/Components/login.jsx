@@ -22,28 +22,36 @@ export default function  Login(){
        email: user, 
        password: password
    }
- 
-   const [result, setResult] = useState(0)
+
+       const [result, setResult] = useState('')
+    //    useEffect(async ()=> {
+    //         const results = await axios.post(`http://localhost:3001/auth`, myUser)
+    //         setResult(results.data.result)
+    //         // console.log(results)
+    //     }, [])
+
+
+    
+
+        //console.log('results', results)
+        console.log('myUser', myUser)
+        console.log('result', result)
    const dispatched = async ()=>{
         const results = await axios.post(`http://localhost:3001/auth`, myUser)
         setResult(results.data)
     if(result.result){       
-        console.log(result)
-        navigate(`/${result.id}`)
+      //  console.log('entra bien')
+       navigate(`/${result.id}`)
      }
-    else {
+   else {
        Swal.fire({
             icon: 'info',
             title: 'Oops...',
             text: 'Try click again',
           })
-    }
-    // axios.post(`http://localhost:3001/auth`, myUser)
-    // .then(x=> {
-    //     console.log(x)
-    // })
+   }
 }
-console.log(result)
+//console.log(result)
 
     return (
         <div className='login'>
