@@ -24,27 +24,30 @@ export default function  Login(){
    }
 
        const [result, setResult] = useState('')
-    //    useEffect(async ()=> {
+
+        const dispatched2 = async ()=>{
+        const results = await axios.post(`http://localhost:3001/auth`, myUser)
+        setResult(results.data)
+    }
+
+       useEffect(async ()=> {
     //         const results = await axios.post(`http://localhost:3001/auth`, myUser)
     //         setResult(results.data.result)
     //         // console.log(results)
-    //     }, [])
-
-
-    
-
-        //console.log('results', results)
+               //result
+        }, [])
+   
         console.log('myUser', myUser)
         console.log('result', result)
    const dispatched = async ()=>{
-        const results = await axios.post(`http://localhost:3001/auth`, myUser)
-        setResult(results.data)
+        // const results = await axios.post(`http://localhost:3001/auth`, myUser)
+        // setResult(results.data)
+        await dispatched2()
     if(result.result){       
-      //  console.log('entra bien')
        navigate(`/${result.id}`)
      }
    else {
-       Swal.fire({
+        Swal.fire({
             icon: 'info',
             title: 'Oops...',
             text: 'Try click again',
@@ -55,12 +58,13 @@ export default function  Login(){
 
     return (
         <div className='login'>
-           <form>
+            <h1 className='login_title'> Login </h1>
+           <form className='form-container'>
                <input  placeholder="email ..." onChange={e=> handleUserName(e.target.value)}/> 
                <input type='password' placeholder="password ..."onChange={e=> handlePassword(e.target.value)}/> 
            </form>
 
-           <button onClick={()=> dispatched()}> Entrar </button>
+           <button onClick={()=> dispatched()} className='button'> Entrar </button>
 
         </div>
     )
