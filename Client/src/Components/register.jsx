@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
  import axios from 'axios'
  import './register.css'
+import Swal from "sweetalert2"
 
 
 export default function Register(){
@@ -25,13 +26,25 @@ export default function Register(){
         setPass(e.target.value)
     }
 
-    const checkPassword = ()=> {
+    const checkPassword = async()=> {
         if(pass !== user.password){
-            return alert('Need to check your password')
+            return Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please check your password again',
+               
+              })
+        } else if(!user.email.includes('@')){
+            return Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please enter a valid email',               
+              })
         }
         else {
-            postUser()
-            navigate('../')
+           await postUser()
+           await axios.post(`http://localhost:3001/auth`, user)
+           .then(x=> navigate(`../${x.data.id}`))           
         }
     }
 

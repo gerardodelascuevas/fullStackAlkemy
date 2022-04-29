@@ -14,7 +14,7 @@ module.exports = sequelize=> {
         },
         concept: {
             type: DataTypes.STRING,
-            allowNull: false,
+            //allowNull: false,
         },
         amount: {
             type: DataTypes.STRING,

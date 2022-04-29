@@ -1,6 +1,8 @@
 import { useState } from "react"
 import axios from "axios"
 import { Link, useNavigate, useParams } from "react-router-dom"
+import './createMovement.css'
+import Swal from "sweetalert2"
 
 
 export default function CreateMovement(){
@@ -19,13 +21,13 @@ export default function CreateMovement(){
            setMovement(movement)
            await axios.post('http://localhost:3001/movement', movement)
           
-            alert('The database has been uploaded')
+            Swal.fire('The database has been uploaded')
             navigate(`../${id}`)        
             //window.location.reload()
         }
-       
+       console.log(movement)
     return (    
-    <div>
+    <div className="createMovement">
         <div>
                     <h2> Create a new movement </h2>
                     <h6> Concept </h6>

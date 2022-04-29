@@ -8,21 +8,31 @@ const router = Router()
 const { Op } = require("sequelize")
 
 const getMovementInfo = async ()=> {
-    return await Users.findAll({
+    try {
+        return await Users.findAll({
         include: [{
             model: Movement,
             attributes: ["date", "concept", "amount", "type"]
         }]
     })
+    } catch (error) {
+        console.log(error)
+    }    
 }
    
 router.get('/home', async (req, res)=> {
-    const theInfo = await getMovementInfo()
-    res.send(theInfo)
+    try {
+      const theInfo = await getMovementInfo()
+        res.send(theInfo)  
+    } catch (error) {
+        console.log(error)
+    }
+    
 })
 
 router.post('/users', async (req, res)=> {
     let { name, password, email } = req.body
+    try {
     console.log('user name '+ name + ' contraseña ' + password)
     password = await bcrypt.hash(password, bcrypt.genSaltSync(10));
     let newUser = await Users.create({
@@ -30,7 +40,13 @@ router.post('/users', async (req, res)=> {
         password: password,
         email: email
     })
-    res.send(newUser)
+    res.send(newUser) 
+
+    } catch (error) {
+        console.log(error)
+        
+    }
+  
 })
 
 router.get('/users',async (req, res)=> {
@@ -42,29 +58,34 @@ router.get('/users',async (req, res)=> {
 
 router.post('/movement', async (req, res)=> {
     const { date, concept, amount,  type, id } = req.body
-  
-    let newMovement = await Movement.create({
+    try {
+       let newMovement = await Movement.create({
         date,
         concept,
         amount, 
-        type})    
+        type })    
 
    let user = await Users.findOne( {
         where: {id: id}
     }) 
-    console.log(user)
-    let myMovement = await Movement.findOne({
-        where: {concept: newMovement.concept}
-    })
-    await user.addMovement(myMovement)
-    res.send(newMovement)
+    
+    //let myMovement = await Movement.findOne({
+      //  where: {concept: newMovement.concept}
+    //})
+    await user.addMovement(newMovement)
+    res.send(newMovement)  
+    } catch (error) {
+        console.log(error)
+    }
+  
+   
 })
 
 router.post('/auth', async (req, res)=> {
     const { email, password } = req.body;
     try { 
         if(!email || !password) {
-        return res.status(404).send("Email and password are required")
+        return res.send("Email and password are required")
     }
      const user = await Users.findOne({
          where: { email: email }
@@ -78,7 +99,7 @@ router.post('/auth', async (req, res)=> {
          }
         res.send(response)
      } else {
-         res.status(400).send({msg: "user not found"})
+         res.send({msg: "user not found"})
      }
         
     } catch (error) {
@@ -91,7 +112,8 @@ router.post('/auth', async (req, res)=> {
 
 router.get('/:id', async (req, res)=> {
     const { id } = req.params
-    let user = await Users.findAll({
+    try {
+       let user = await Users.findAll({
        include: [{
            model: Movement,
        }]
@@ -107,21 +129,30 @@ router.get('/:id', async (req, res)=> {
         userData: theUser
     }
     res.send(response)
+    } catch (error) {
+        console.log(error)
+    }
+    
 })
 
 router.put('/editMovement', async(req, res)=> {
     const { id, amount, concept, type } = req.body
-    console.log(id, concept)
-             Movement.update(
-                 { amount: amount, concept: concept, type: type, }, 
-                { where: {id: id}   }
+   try {
+       Movement.update(
+            { amount: amount, concept: concept, type: type, }, 
+            { where: {id: id}   }
             ) 
              res.send('Database is updated')
+        
+   } catch (error) {
+       console.log(error)
+   }
+             
 })
 
 router.delete('/:id', async(req, res)=> {
     const { id } = req.params
-    
+ 
     if(id){
     await Movement.destroy({ 
         where: { id: id }

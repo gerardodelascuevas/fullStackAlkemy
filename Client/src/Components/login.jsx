@@ -15,20 +15,17 @@ export default function  Login(){
        setUser(e)
    }
 
-   const handlePassword = (e)=> {
+   const handlePassword = async(e)=> {
        setPassword(e)
+       const results = await axios.post(`http://localhost:3001/auth`, myUser)
+        setResult(results.data)
    }
    const myUser = {
        email: user, 
-       password: password
+       password: password,
    }
 
        const [result, setResult] = useState('')
-
-        const dispatched2 = async ()=>{
-        const results = await axios.post(`http://localhost:3001/auth`, myUser)
-        setResult(results.data)
-    }
 
        useEffect(async ()=> {
     //         const results = await axios.post(`http://localhost:3001/auth`, myUser)
@@ -40,17 +37,31 @@ export default function  Login(){
         console.log('myUser', myUser)
         console.log('result', result)
    const dispatched = async ()=>{
-        // const results = await axios.post(`http://localhost:3001/auth`, myUser)
-        // setResult(results.data)
-        await dispatched2()
-    if(result.result){       
+         const results = await axios.post(`http://localhost:3001/auth`, myUser)
+         setResult(results.data)
+        
+    if(await result.result){       
        navigate(`/${result.id}`)
      }
+     else if(result.msg === 'user not found'){
+        Swal.fire({
+            icon: 'error',
+            title: 'User not found',
+            text: 'Check your data',
+          })
+     }
+     else if(result.result === false){
+        Swal.fire({
+            icon: 'error',
+            title: 'Password incorrect',
+            text: 'Please check your data',
+          })
+     }     
    else {
         Swal.fire({
             icon: 'info',
-            title: 'Oops...',
-            text: 'Try click again',
+            title: `Sorry, we don't capture your data`,
+            text: 'Please try click again ',
           })
    }
 }
@@ -64,7 +75,7 @@ export default function  Login(){
                <input type='password' placeholder="password ..."onChange={e=> handlePassword(e.target.value)}/> 
            </form>
 
-           <button onClick={()=> dispatched()} className='button'> Entrar </button>
+           <button onClick={()=> dispatched()} className='button'> Login </button>
 
         </div>
     )
