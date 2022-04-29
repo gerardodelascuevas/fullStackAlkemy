@@ -36,7 +36,7 @@ export default function Profile(){
         myType === 'all' ?  userMovementForShow = userMovementForShow : 
         userMovementForShow = result.userMovements.filter(x=> x.type === myType)
        
-    console.log(userMovementForShow)
+ 
     let contador = 1 
 
     //PAGINATION 
@@ -58,7 +58,7 @@ export default function Profile(){
       <button onClick={()=> navigate('/')} className='button'> Sign off </button> 
      {result ? 
      <h1> Welcome {result.userData.name} </h1> : <h1>Loading...</h1>}    
-     <select onChange={(e)=> handleFilterResult(e.target.value)}>
+     <select onChange={(e)=> handleFilterResult(e.target.value)} className='select button'>
          <option value='all'> Select the amount type </option>
          <option value='positive'> Positive </option>
          <option value='negative'> Negative </option>

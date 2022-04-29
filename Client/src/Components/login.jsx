@@ -17,27 +17,17 @@ export default function  Login(){
 
    const handlePassword = async(e)=> {
        setPassword(e)
-       const results = await axios.post(`http://localhost:3001/auth`, myUser)
-        setResult(results.data)
    }
    const myUser = {
        email: user, 
        password: password,
    }
 
-       const [result, setResult] = useState('')
-
-       useEffect(async ()=> {
-    //         const results = await axios.post(`http://localhost:3001/auth`, myUser)
-    //         setResult(results.data.result)
-    //         // console.log(results)
-               //result
-        }, [])
+       const [result, setResult] = useState({})
    
-        console.log('myUser', myUser)
-        console.log('result', result)
+
    const dispatched = async ()=>{
-         const results = await axios.post(`http://localhost:3001/auth`, myUser)
+         const results = await axios.post(`http://localhost:3001/auth`, myUser)   
          setResult(results.data)
         
     if(await result.result){       
@@ -49,24 +39,16 @@ export default function  Login(){
             title: 'User not found',
             text: 'Check your data',
           })
-     }
-     else if(result.result === false){
-        Swal.fire({
-            icon: 'error',
-            title: 'Password incorrect',
-            text: 'Please check your data',
-          })
-     }     
+     }   
    else {
         Swal.fire({
             icon: 'info',
-            title: `Sorry, we don't capture your data`,
-            text: 'Please try click again ',
+            title: `Sorry, we don't capture your data or password incorrect`,
+            text: 'Please try click again first or check your password',
           })
    }
 }
-//console.log(result)
-
+ 
     return (
         <div className='login'>
             <h1 className='login_title'> Login </h1>

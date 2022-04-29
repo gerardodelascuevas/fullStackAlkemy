@@ -32,8 +32,7 @@ router.get('/home', async (req, res)=> {
 
 router.post('/users', async (req, res)=> {
     let { name, password, email } = req.body
-    try {
-    console.log('user name '+ name + ' contraseña ' + password)
+    try {    
     password = await bcrypt.hash(password, bcrypt.genSaltSync(10));
     let newUser = await Users.create({
         name: name, 

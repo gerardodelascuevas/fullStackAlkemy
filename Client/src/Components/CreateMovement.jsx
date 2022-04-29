@@ -25,7 +25,7 @@ export default function CreateMovement(){
             navigate(`../${id}`)        
             //window.location.reload()
         }
-       console.log(movement)
+     
     return (    
     <div className="createMovement">
         <div>

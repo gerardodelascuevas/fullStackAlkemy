@@ -25,12 +25,10 @@ export default function InputProfile({id, date, concept, amount, type }){
         })
     }
 
-    console.log(movement)
-
     const handleUpdateMovement = async()=> {
-        console.log(movement)
+      
         await axios.put(`http://localhost:3001/editMovement`, movement)
-        alert('The database is updated')
+        Swal.fire('The database is updated')
         window.location.reload()
     }
    
